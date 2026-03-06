@@ -110,15 +110,7 @@
     /* ABOUT */
     #about{background:var(--surface);}
     .about-grid{display:grid;grid-template-columns:320px 1fr;gap:5rem;align-items:start;}
-    .photo-frame{width:100%;aspect-ratio:3/4;background:var(--surface2);overflow:hidden;position:relative;clip-path:polygon(0 0,calc(100% - 16px) 0,100% 16px,100% 100%,16px 100%,0 calc(100% - 16px));}
-    .photo-frame img{width:100%;height:100%;object-fit:cover;display:none;}
-    .photo-ph{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1rem;background:linear-gradient(135deg,rgba(168,85,247,.08),rgba(6,182,212,.08));}
-    .photo-ph-icon{font-size:4rem;opacity:.25;}
-    .photo-ph-txt{font-family:var(--font-m);font-size:.58rem;letter-spacing:.1em;color:var(--muted);text-transform:uppercase;}
-    .exp-badge{position:absolute;bottom:-1.2rem;right:-1.2rem;background:linear-gradient(135deg,#a855f7,#06b6d4);color:#fff;padding:1.2rem 1.5rem;text-align:center;z-index:2;}
-    .exp-num{font-family:var(--font-d);font-size:2.2rem;line-height:1;display:block;}
-    .exp-lbl{font-family:var(--font-m);font-size:.55rem;letter-spacing:.1em;text-transform:uppercase;opacity:.85;}
-    .location-tag{display:inline-flex;align-items:center;gap:.5rem;font-family:var(--font-m);font-size:.67rem;color:var(--muted);margin-top:2.8rem;}
+    /* photo styles inline */
 
     .about-text p{color:var(--muted);line-height:1.9;margin-bottom:1.2rem;font-size:.97rem;}
     .about-text p strong{color:var(--text);font-weight:500;}
@@ -344,10 +336,10 @@
   <div class="hero-glow"></div><div class="hero-glow2"></div><div class="hero-grid-bg"></div>
   <div class="hero-inner">
     <div>
-      <div class="status-badge"><div class="status-dot"></div><div class="status-text">Available for new projects</div></div>
+      <div class="status-badge" id="statusBadge"><div class="status-dot"></div><div class="status-text">Available for new projects</div></div>
       <h1 class="hero-title"><div class="plain">JIBON</div><div class="grad">MISTRY</div></h1>
       <div class="hero-role">Social Media Manager &amp; <em>Content Strategist</em></div>
-      <p class="hero-bio">I help <strong>brands grow</strong> on social media with data-driven strategies, viral content &amp; community building. <strong>4+ years</strong> experience, working with clients from <strong>USA, UK, Canada &amp; worldwide</strong> — turning followers into loyal customers.</p>
+      <p class="hero-bio" id="heroBio">I help <strong>brands grow</strong> on social media with data-driven strategies, viral content &amp; community building. <strong>4+ years</strong> experience, working with clients from <strong>USA, UK, Canada &amp; worldwide</strong> — turning followers into loyal customers.</p>
       <div class="hero-btns">
         <a href="#portfolio" class="btn-grad">View My Work</a>
         <a href="https://wa.me/8801865632930?text=Hi%20Jibon!%20I%20am%20interested%20in%20your%20social%20media%20services." target="_blank" class="btn-out">💬 Chat on WhatsApp</a>
@@ -385,8 +377,14 @@
           <div class="photo-ph-txt">Photo Coming Soon</div>
         </div>
       </div>
-      <div class="exp-badge"><span class="exp-num">4+</span><span class="exp-lbl">Years Experience</span></div>
-      <div class="location-tag">📍 Bangladesh &nbsp;·&nbsp; 🌍 Worldwide</div>
+      <div style="text-align:center;margin-top:2rem;">
+        <div style="display:inline-flex;background:linear-gradient(135deg,#a855f7,#06b6d4);color:#fff;padding:.8rem 1.8rem;gap:1.5rem;align-items:center;">
+          <div style="text-align:center;"><span style="font-family:var(--font-d);font-size:1.8rem;display:block;line-height:1;">4+</span><span style="font-family:var(--font-m);font-size:.52rem;letter-spacing:.08em;text-transform:uppercase;opacity:.85;">Years Exp.</span></div>
+          <div style="width:1px;height:30px;background:rgba(255,255,255,.3);"></div>
+          <div style="text-align:center;"><span style="font-family:var(--font-d);font-size:1.8rem;display:block;line-height:1;" id="badgeClients">50+</span><span style="font-family:var(--font-m);font-size:.52rem;letter-spacing:.08em;text-transform:uppercase;opacity:.85;">Clients</span></div>
+        </div>
+        <div style="margin-top:1rem;font-family:var(--font-m);font-size:.67rem;color:var(--muted);display:flex;align-items:center;justify-content:center;gap:.4rem;">📍 Bangladesh &nbsp;·&nbsp; 🌍 Worldwide</div>
+      </div>
     </div>
     <div class="about-text fade-up">
       <div class="section-hdr">
@@ -585,7 +583,7 @@
 <!-- FIREBASE -->
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getFirestore, collection, query, where, orderBy, onSnapshot, addDoc, getDocs, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { getFirestore, collection, query, where, orderBy, onSnapshot, addDoc, getDocs, serverTimestamp, doc, getDoc, onSnapshot as onSnap } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
 const app = initializeApp({
   apiKey:"AIzaSyD_gSxNc1bp2dVKeEDV38tkgpk_YKow-dE",
@@ -596,6 +594,33 @@ const app = initializeApp({
   appId:"1:718527545775:web:dec8d1505d5087d2836f5a"
 });
 const db = getFirestore(app);
+
+// ── SETTINGS — load profile photo & bio real-time ──
+onSnapshot(doc(db, 'settings', 'main'), (snap) => {
+  if (!snap.exists()) return;
+  const s = snap.data();
+
+  // Profile photo — round
+  if (s.photoUrl) {
+    const img = document.getElementById('profilePhoto');
+    const ph  = document.getElementById('photoPh');
+    if (img) {
+      img.src = s.photoUrl;
+      img.style.cssText = 'display:block;width:100%;height:100%;object-fit:cover;border-radius:50%;';
+      if (ph) ph.style.display = 'none';
+    }
+  }
+
+  // Availability badge
+  const badge = document.getElementById('statusBadge');
+  if (badge) badge.style.display = s.available === false ? 'none' : 'inline-flex';
+
+  // Bio
+  if (s.bio) {
+    const bioEl = document.getElementById('heroBio');
+    if (bioEl) bioEl.innerHTML = s.bio;
+  }
+});
 
 const defaultReviews = [
   {name:"Sarah Mitchell",text:"Jibon completely transformed our Instagram presence. We went from 800 to over 12,000 followers in just 3 months! His content strategy and engagement techniques are truly next-level.",platform:"Instagram Growth — USA",rating:5,approved:true},
@@ -692,12 +717,40 @@ window.showToast=(msg)=>{ const t=document.getElementById('toast'); t.textConten
 </script>
 
 <script>
-window.addEventListener('load',()=>setTimeout(()=>document.getElementById('loader').classList.add('hidden'),1400));
+// Loader
+function hideLoader(){const l=document.getElementById('loader');if(l)l.classList.add('hidden');}
+setTimeout(hideLoader,1500);
+document.addEventListener('DOMContentLoaded',()=>setTimeout(hideLoader,800));
+
+// Theme
 if(localStorage.getItem('theme')==='light') document.documentElement.setAttribute('data-theme','light');
-function toggleTheme(){ const c=document.documentElement.getAttribute('data-theme'); document.documentElement.setAttribute('data-theme',c==='light'?'':'light'); localStorage.setItem('theme',c==='light'?'dark':'light'); }
+function toggleTheme(){const c=document.documentElement.getAttribute('data-theme');document.documentElement.setAttribute('data-theme',c==='light'?'':'light');localStorage.setItem('theme',c==='light'?'dark':'light');}
+
+// Nav scroll
 window.addEventListener('scroll',()=>document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>50));
-function toggleMenu(){ document.getElementById('navLinks').classList.toggle('open'); }
-function closeMenu(){ document.getElementById('navLinks').classList.remove('open'); }
-const cur=document.getElementById('cursor'), ring=document.getElementById('cursorRing');
-document.addEventListener('mousemove',e=>{ cur.style.left=e.clientX+'px'; cur.style.top=e.clientY+'px'; ring.style.left=e.clientX+'px'; ring.style.top=e.clientY+'px'; });
-function
+
+// Mobile menu
+function toggleMenu(){document.getElementById('navLinks').classList.toggle('open');}
+function closeMenu(){document.getElementById('navLinks').classList.remove('open');}
+
+// Cursor
+const cur=document.getElementById('cursor'),ring=document.getElementById('cursorRing');
+document.addEventListener('mousemove',e=>{
+  cur.style.left=e.clientX+'px';cur.style.top=e.clientY+'px';
+  ring.style.left=e.clientX+'px';ring.style.top=e.clientY+'px';
+});
+
+// Fade up observer — global so Firebase callbacks can call it
+function observeFadeUps(){
+  const obs=new IntersectionObserver((entries)=>{
+    entries.forEach((e,i)=>{
+      if(e.isIntersecting){setTimeout(()=>{e.target.classList.add('visible');obs.unobserve(e.target);},i*90);}
+    });
+  },{threshold:.08});
+  document.querySelectorAll('.fade-up:not(.visible)').forEach(el=>obs.observe(el));
+}
+document.addEventListener('DOMContentLoaded', observeFadeUps);
+window.observeFadeUps = observeFadeUps;
+</script>
+</body>
+</html>
