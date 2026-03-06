@@ -333,7 +333,7 @@
     <li><a href="#contact" onclick="closeMenu()">Contact</a></li>
   </ul>
   <div class="nav-right">
-    <a href="https://www.fiverr.com/s/DBb1krN" target="_blank" class="hire-btn">Hire Me →</a>
+    <a href="https://wa.me/8801865632930?text=Hi%20Jibon!%20I%20want%20to%20hire%20you%20for%20social%20media%20management." target="_blank" class="hire-btn">💬 Hire Me</a>
     <button class="theme-btn" onclick="toggleTheme()">◑</button>
     <div class="hamburger" id="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
   </div>
@@ -350,7 +350,7 @@
       <p class="hero-bio">I help <strong>brands grow</strong> on social media with data-driven strategies, viral content &amp; community building. <strong>4+ years</strong> experience, working with clients from <strong>USA, UK, Canada &amp; worldwide</strong> — turning followers into loyal customers.</p>
       <div class="hero-btns">
         <a href="#portfolio" class="btn-grad">View My Work</a>
-        <a href="https://www.fiverr.com/s/DBb1krN" target="_blank" class="btn-out">Hire on Fiverr ↗</a>
+        <a href="https://wa.me/8801865632930?text=Hi%20Jibon!%20I%20am%20interested%20in%20your%20social%20media%20services." target="_blank" class="btn-out">💬 Chat on WhatsApp</a>
       </div>
       <div class="social-quick">
         <a href="https://www.facebook.com/jibon.mistry.24400" target="_blank" class="sq-btn">📘 Facebook</a>
@@ -378,7 +378,7 @@
   <div class="about-grid">
     <div class="fade-up" style="position:relative;">
       <div class="photo-frame">
-        <img id="profilePhoto" src="YOUR_PHOTO_URL" alt="Jibon Mistry"
+        <img id="profilePhoto" src="https://raw.githubusercontent.com/jibon757/p/e1643e36d9a5581bfb4a18416891e6da6bea59a6/jj.png" alt="Jibon Mistry"
           onload="this.style.display='block';document.getElementById('photoPh').style.display='none';" />
         <div id="photoPh" class="photo-ph">
           <div class="photo-ph-icon">👤</div>
@@ -408,7 +408,7 @@
         </div>
       </div>
       <div class="cta-chips">
-        <a href="mailto:editor.jibon757@gmail.com" class="cta-chip">📧 editor.jibon757@gmail.com</a>
+        <a href="/cdn-cgi/l/email-protection#debbbab7aab1acf0b4b7bcb1b0e9ebe99eb9b3bfb7b2f0bdb1b3" class="cta-chip">📧 <span class="__cf_email__" data-cfemail="94f1f0fde0fbe6bafefdf6fbfaa3a1a3d4f3f9f5fdf8baf7fbf9">[email&#160;protected]</span></a>
         <a href="https://wa.me/8801865632930" target="_blank" class="cta-chip">💬 +880 1865-632930</a>
         <a href="https://www.fiverr.com/s/DBb1krN" target="_blank" class="cta-chip">🛒 Fiverr Profile</a>
       </div>
@@ -527,7 +527,7 @@
       <div class="section-div" style="margin-bottom:1.5rem;"></div>
       <p style="color:var(--muted);line-height:1.85;margin-bottom:2.5rem;font-size:.95rem;">Ready to grow your social media? Have a project in mind? Reach out — I respond within 24 hours and offer a <strong style="color:var(--text)">free consultation</strong> for new clients.</p>
       <div class="ct-cards">
-        <a href="mailto:editor.jibon757@gmail.com" class="ct-card"><div class="ct-ico">📧</div><div><div class="ct-lbl">Email</div><div class="ct-val">editor.jibon757@gmail.com</div></div></a>
+        <a href="/cdn-cgi/l/email-protection#2742434e534855094d4e45484910121067404a464e4b0944484a" class="ct-card"><div class="ct-ico">📧</div><div><div class="ct-lbl">Email</div><div class="ct-val"><span class="__cf_email__" data-cfemail="ea8f8e839e8598c48083888584dddfddaa8d878b8386c4898587">[email&#160;protected]</span></div></div></a>
         <a href="https://wa.me/8801865632930" target="_blank" class="ct-card"><div class="ct-ico">💬</div><div><div class="ct-lbl">WhatsApp</div><div class="ct-val">+880 1865-632930</div></div></a>
         <a href="https://www.fiverr.com/s/DBb1krN" target="_blank" class="ct-card"><div class="ct-ico">🛒</div><div><div class="ct-lbl">Fiverr</div><div class="ct-val">fiverr.com/s/DBb1krN</div></div></a>
         <div class="ct-card"><div class="ct-ico">📍</div><div><div class="ct-lbl">Location</div><div class="ct-val">Bangladesh · Available Worldwide</div></div></div>
@@ -583,7 +583,7 @@
 </footer>
 
 <!-- FIREBASE -->
-<script type="module">
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getFirestore, collection, query, where, orderBy, onSnapshot, addDoc, getDocs, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
@@ -700,11 +700,4 @@ function toggleMenu(){ document.getElementById('navLinks').classList.toggle('ope
 function closeMenu(){ document.getElementById('navLinks').classList.remove('open'); }
 const cur=document.getElementById('cursor'), ring=document.getElementById('cursorRing');
 document.addEventListener('mousemove',e=>{ cur.style.left=e.clientX+'px'; cur.style.top=e.clientY+'px'; ring.style.left=e.clientX+'px'; ring.style.top=e.clientY+'px'; });
-function observeFadeUps(){
-  const obs=new IntersectionObserver((entries)=>{ entries.forEach((e,i)=>{ if(e.isIntersecting){ setTimeout(()=>{ e.target.classList.add('visible'); obs.unobserve(e.target); },i*90); } }); },{threshold:.08});
-  document.querySelectorAll('.fade-up:not(.visible)').forEach(el=>obs.observe(el));
-}
-document.addEventListener('DOMContentLoaded',observeFadeUps);
-</script>
-</body>
-</html>
+function
