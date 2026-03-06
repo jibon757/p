@@ -353,6 +353,67 @@
         </div>
       </div>
 
+      <!-- SETTINGS PAGE -->
+      <div class="page-tabs" id="page-settings">
+        <div class="recent-section" style="max-width:680px;">
+          <div class="section-hdr"><h3>Site Settings</h3></div>
+          <div style="padding:2rem;">
+
+            <!-- PROFILE PHOTO -->
+            <div style="padding-bottom:2.5rem;margin-bottom:2.5rem;border-bottom:1px solid var(--border);">
+              <h4 style="font-family:var(--font-display);font-size:1.4rem;letter-spacing:1px;margin-bottom:.4rem;">Profile Photo</h4>
+              <p style="color:var(--muted);font-size:.82rem;margin-bottom:1.8rem;">
+                ছবি <a href="https://imgbb.com" target="_blank" style="color:var(--accent)">imgbb.com</a> তে upload করুন → <strong style="color:var(--text)">Direct Link</strong> copy করুন → নিচে paste করুন।
+              </p>
+              <div style="display:flex;gap:2rem;align-items:flex-start;flex-wrap:wrap;">
+                <div style="flex:1;min-width:260px;">
+                  <div class="form-group">
+                    <label>Photo URL (Direct Link)</label>
+                    <input type="url" id="settingPhotoUrl" placeholder="https://i.ibb.co/xxxxxxx/photo.jpg" />
+                  </div>
+                  <div style="font-family:var(--font-mono);font-size:.6rem;color:var(--muted);margin-bottom:1.2rem;line-height:1.6;">
+                    💡 imgbb.com → Upload → "Direct Link" copy করুন
+                  </div>
+                </div>
+                <!-- LIVE PREVIEW -->
+                <div style="text-align:center;">
+                  <div style="width:110px;height:110px;border-radius:50%;overflow:hidden;border:3px solid var(--border);background:var(--surface2);display:flex;align-items:center;justify-content:center;margin:0 auto .6rem;">
+                    <span id="photoPreviewIcon" style="font-size:2.5rem;opacity:.3;">👤</span>
+                    <img id="photoPreviewImg" src="" alt="Preview" style="display:none;width:100%;height:100%;object-fit:cover;" />
+                  </div>
+                  <div style="font-family:var(--font-mono);font-size:.58rem;color:var(--muted);letter-spacing:.05em;">LIVE PREVIEW</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- BIO -->
+            <div style="padding-bottom:2.5rem;margin-bottom:2.5rem;border-bottom:1px solid var(--border);">
+              <h4 style="font-family:var(--font-display);font-size:1.4rem;letter-spacing:1px;margin-bottom:.4rem;">Hero Bio</h4>
+              <p style="color:var(--muted);font-size:.82rem;margin-bottom:1.2rem;">Hero section-এ যে bio দেখাবে।</p>
+              <div class="form-group">
+                <label>Bio Text</label>
+                <textarea id="settingBio" style="min-height:80px;" placeholder="I help brands grow on social media..."></textarea>
+              </div>
+            </div>
+
+            <!-- AVAILABILITY -->
+            <div style="margin-bottom:2rem;">
+              <h4 style="font-family:var(--font-display);font-size:1.4rem;letter-spacing:1px;margin-bottom:.4rem;">Availability</h4>
+              <p style="color:var(--muted);font-size:.82rem;margin-bottom:1.2rem;">"Available for new projects" badge দেখাবে কি না।</p>
+              <div class="toggle-switch">
+                <label class="toggle"><input type="checkbox" id="settingAvailable" checked /><div class="toggle-slider"></div></label>
+                <span class="toggle-label">Available for new projects</span>
+              </div>
+            </div>
+
+            <button class="btn btn-primary" onclick="saveSettings()" id="settingsSaveBtn" style="width:100%;margin-top:.5rem;">
+              💾 Save Settings — Site আপডেট হবে →
+            </button>
+
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 </div>
@@ -834,7 +895,6 @@ window.saveSettings = async () => {
   const btn = document.getElementById('settingsSaveBtn');
   btn.textContent = 'Saving...'; btn.disabled = true;
   try {
-    const { setDoc } = await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js");
     await setDoc(doc(db, 'settings', 'main'), { photoUrl, bio, available, updatedAt: serverTimestamp() });
     showToast('Settings saved! Site updated.', 'success');
     if (photoUrl) showPhotoPreview(photoUrl);
